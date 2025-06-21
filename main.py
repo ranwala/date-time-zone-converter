@@ -51,4 +51,8 @@ with ui.column().classes('items-center w-auto mx-auto gap-10 mt-20'):
 
     ui.button("Convert Time", on_click=on_button_click)
 
-ui.run()
+if __name__ == "__main__":
+    ui.run()
+
+from nicegui import app as nicegui_app
+app = nicegui_app
