@@ -1,6 +1,7 @@
 from nicegui import ui
 import datetime
 import pytz
+import os
 
 time_zones = pytz.all_timezones
 
@@ -52,7 +53,7 @@ with ui.column().classes('items-center w-auto mx-auto gap-10 mt-20'):
     ui.button("Convert Time", on_click=on_button_click)
 
 
-ui.run()
+ui.run(host='0.0.0.0', port=int(os.environ.get("PORT", 8080)))
 
 from nicegui import app as nicegui_app
 app = nicegui_app
