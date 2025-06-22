@@ -1,6 +1,7 @@
 from nicegui import app, ui
 import datetime
 import pytz
+from tzlocal import get_localzone
 
 time_zones = pytz.all_timezones
 
@@ -45,7 +46,7 @@ with ui.column().classes('items-center w-auto mx-auto gap-10 mt-20'):
     with ui.row().classes('gap-4'):
         with ui.column().classes('gap-0'):
             ui.label("From Time Zone").tailwind('font-bold')
-            from_zone = ui.select(time_zones, value="Europe/Berlin")
+            from_zone = ui.select(time_zones)
 
         with ui.column().classes('gap-0'):
             ui.label("To Time Zone").tailwind('font-bold')
@@ -57,9 +58,12 @@ with ui.column().classes('items-center w-auto mx-auto gap-10 mt-20'):
     ui.button("Convert Time", on_click=on_button_click)
 
     def handle_state():
-        now = datetime.datetime.now()
+        local_tz = get_localzone()
+        now = datetime.datetime.now(local_tz)
         selected_date.value = now.date().isoformat()
         selected_time.value = now.time().strftime('%H:%M:%S')
+
+        from_zone.value = str(local_tz)
 
     app.on_connect(handle_state)
 
